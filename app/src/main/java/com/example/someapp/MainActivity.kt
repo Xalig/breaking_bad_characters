@@ -1,0 +1,119 @@
+package com.example.someapp
+
+import android.content.Context
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.characters.view.*
+
+class MainActivity : AppCompatActivity() {
+    var constList=ArrayList<breakingbad>()
+    var adapter:breakingbadAdapter?=null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        constList.add(breakingbad("Walter White", "Walter Hartwell \"Walt\" White Sr., also known by his clandestine pseudonym \"Heisenberg\", was an American drug kingpin. A former chemist and high school chemistry teacher in Albuquerque, New Mexico, he started manufacturing crystal methamphetamine after being diagnosed with terminal lung cancer, in order to pay for his treatments and secure his family's financial future.\n" +
+                "\n" +
+                "In graduate school, Walt contributed to research that would win the 1984 Nobel Prize in Chemistry. After getting his degree, he co-founded the company Gray Matter Technologies with his friend Elliott Schwartz and his then-girlfriend Gretchen. Walt abruptly left the company and sold his financial interest for \$5,000. Gretchen and Elliot later married and made a fortune when the company went public. Walt resents Elliot and Gretchen for profiting from his work without crediting him. He took up a job as a chemistry teacher at the local high school, but his salary ended up being low to the point where he took up a second job at the car wash, but this did not help his financial woes. Eventually, after he's been diagnosed with lung cancer, he decided to be a drug dealer after seeing how lucrative it is.\n" +
+                "\n" +
+                "Knowing nothing about the drug trade, he enlists the aid of his former student, Jesse Pinkman, to manufacture and, more importantly, sell his meth. Walt's scientific knowledge and dedication to quality lead him to produce crystal meth of unrivaled purity. Walt eventually devised an alternative chemical process utilizing methylamine, giving his product a distinctive blue color. His crystal meth, christened \"blue sky\" by dealers and users alike, instantly began to dominate the market. While Walt was initially squeamish about the use of violence, he gradually came to see it as a necessity and eventually developed into a ruthless drug lord motivated largely by vanity, ego, and greed. Not only does Walt become more sinister throughout the series, but he rises in power. At the beginning of his new career, he and Jesse make mere thousands of dollars street dealing, and are constantly met with failure, but later on, Walt becomes a millionaire drug lord that supplies crystal meth all across the American Southwest and as far as Eastern Europe. He achieved this by killing Gustavo Fring, establishing his own drug empire, and then going into partnership with Lydia Rodarte-Quayle and a neo-Nazi gang.\n" +
+                "\n" +
+                "After accumulating an \$80 million fortune, Walter finally decided to retire from the drug business permanently. However, his brother-in-law Hank eventually discovered his criminal secrets and embarked on a mission to bring White down. After aligning himself with Jesse (who betrayed Walt after learning of his poisoning of Brock), Hank nearly succeeded in bringing Walt to justice, however he was saved at the last minute by Jack, Todd ,and their neo-Nazi gang who killed both Hank and Steven Gomez and took Jesse hostage. After being turned on by his entire family, Walt was forced to go into hiding in New Hampshire with the help of Ed and would remain in hiding for months. Eventually, he returned to Albuquerque and left his remaining millions to his family. Following that, he personally confronted and killed Jack and his crew. After setting Jesse free, he died from a gunshot wound sustained during his own attack.", R.drawable.walterwhite))
+        constList.add(breakingbad("Jesse Pinkman", "Jesse Bruce Pinkman is the former partner of Walter White in the methamphetamine drug trade. Jesse was a small-time methamphetamine user, manufacturer, and dealer. He was also an inattentive student in Walter White's chemistry class, but was still able to graduate. In his mid-20s, Jesse became Walt's business partner in the meth trade. Before his partnership with Walt, he, operating under the pseudonym \"Cap'n Cook\", added a little Chili powder to make his methamphetamine stand out in the market.\n" +
+                "\n" +
+                "Walt insisted on making a pure product, however, and thus eschewed the chili powder altogether, patronizingly teaching Jesse how to make \"proper\" meth. Walt often treated Jesse like a foolish son in constant need of stern correction. Jesse's own family kicked him out because of his drug use. Despite the friction between them, he and Walt have a deep bond of loyalty. Like Walt, Jesse is horrified by the brutality at the higher levels of the drug trade, but does what he thinks is necessary. He wrestles with feelings of guilt about the deaths, all drug-related, of people he's been associated with, especially his girlfriend Jane Margolis. He often attended Narcotics Anonymous meetings to help deal with these feelings.\n" +
+                "\n" +
+                "Later on in the series, Jesse's loyalty to Walter erodes upon learning from Saul that Walt tricked him into helping him bring down Gustavo Fring by poisoning his girlfriend's son, Brock. As a result, he teams up with Hank Schrader, Walt's DEA brother-in-law, to bring Walt down. They were almost successful, but were stopped by Jack Welker's Gang before Hank could make the arrest.\n" +
+                "\n" +
+                "After Hank was killed by Jack, Jesse was taken prisoner by the gang and forced into labor as a meth-cook slave, which Jesse complied with for the sake of his ex-girlfriend Andrea and her son Brock, even though the former was killed after Jesse had tried to escape. After Walt massacred Jack's gang, Jesse killed Todd Alquist in revenge. After Walt freed him, Jesse drove away from the compound, mentally and emotionally broken from the events that occurred throughout the course of his life.\n" +
+                "\n" +
+                "Following his escape, Jesse displayed signs of post-traumatic stress disorder and began seeking to escape to Alaska for a fresh start, inspired by a conversation he'd had with Mike Ehrmantraut a year earlier. After evading the authorities with the help of his remaining friends Skinny Pete and Badger, Jesse used money taken from Todd's stash to pay Ed Galbraith to help him start a new life in Alaska under a new identity, Mr. Driscoll.", R.drawable.jesse))
+        constList.add(breakingbad("Gustavo Fring", "Gustavo \"Gus\" Fring was a Chilean-born Albuquerque restaurateur, drug boss, business magnate, and philanthropist. He was the respected proprietor of Los Pollos Hermanos, a highly successful restaurant chain. However, despite outward appearances, Gus was a major drug kingpin initially affiliated with a Mexican drug cartel, secretly using his restaurant as a legitimate front for methamphetamine distribution throughout the American southwest. Gus was a criminal who \"hid in plain sight\", using his anti-drug philanthropy to conceal his true nature and build his illicit drug empire step by step.\n" +
+                "\n" +
+                "Gus collaborated with the Cartel solely to sabotage and destroy it for revenge for the murder of his close associate Maximino Arciniega and to allow his operation to control the meth market solely in the southwest, which he finally succeeded at by poisoning the entire Cartel hierarchy. In particular, Gustavo sought to torture and punish Hector Salamanca the most, as it was he who personally murdered Max. To achieve this Gustavo succeeded at sabotaging Hector's operations north of the border and systematically exterminate the majority of his family members while personally tormenting Hector for his own enjoyment.\n" +
+                "\n" +
+                "When Walter White seeks a buyer for his chemically pure meth, he is put in contact with Gus through Saul Goodman. Walt manages to persuade Gus into purchasing thirty-eight pounds of his meth for \$1.2 million; after the product yields good returns, Gus offers Walt \$3 million for three months of his time. Gus' hiring and protection of Walt puts him at odds with the cartel's leadership. Despite Gus' initial protection of Walt, the collaboration between the two men becomes permanently strained after he attempts to kill Walter for killing two of his dealers and after Jesse kills Gale on Walter's orders.\n" +
+                "\n" +
+                "Despite being one step ahead of Walter at every turn and predicting every one of his attempts to kill him, Gus did have one weakness: his unbridled hatred for Hector. Ultimately Walter discovers and exploits this weakness, delivering an explosive device to Hector who later commits a murder-suicide to kill Gus with it.", R.drawable.gus))
+        constList.add(breakingbad("Skylar White", "Skyler \"Sky\" White (née Lambert) is the widow of Walter White and the sister of Marie Schrader. She and Walter have a teenage son, Walter White Jr., and an infant daughter, Holly White. Skyler cares for Walter very much, but their marriage becomes increasingly strained due to his unexplained absences and bizarre behavior, ultimately leading to their separation.\n" +
+                "\n" +
+                "When Walter reveals his involvement in the meth business, she initially seeks a divorce but ultimately ends up aiding him in laundering his illicit funds. At Skyler's behest, the Whites eventually procure the A1A Car Wash that Walter once had to work at. As Walter slowly becomes more of a \"hardened criminal,\" she becomes increasingly frightened for her and her children's safety, attempting to get Walt Jr. and Holly as far away from their father as possible. Sensing that injuries her brother-in-law Hank Schrader suffered in a drug-related shootout are connected to Walt's activities, Skyler offers to pay for his medical bills, explaining to Marie that Walt won a lot of money playing illegal card games. Knowing that Hank would never accept charity, the sisters agree not to tell him that the Whites are augmenting his insurance.\n" +
+                "\n" +
+                "Like her husband, Skyler slowly devolves into a hardened criminal, manipulator and skilled money launderer though nowhere near in severity to her husband and after indirectly causing her former boss and lover Ted Beneke to become permanently disabled, she spirals into a deep depression coupled with an extreme hatred and fear of Walt. Despite this she refuses to assist Hank in bringing Walt to justice after he finally learns the truth about him and even assists Walt in deterring Hank from moving against him by blackmailing him with a slanderous video of a false confession pitting Hank as the \"mastermind\" behind Walt's crimes. Her reasons for this likely stem from a desire to protect herself and her children and possibly due to Walt's impending, inevitable death due to his returning cancer, something Skyler made clear in the past she has been waiting for.\n" +
+                "\n" +
+                "After learning of Hank's death however, Skyler finally betrays Walt and forces him out of their home. However he is able to partially exonerate her for being one of his accomplishes during a phone call monitored by the police by painting her as an innocent victim. Despite this it is not enough and the DEA continue to pressure her to give up Walt and eventually force her and her children out of their home. She is also threatened with death by Todd Alquist if she in any way reveals Lydia Rodarte-Quayle's relationship to Walt.\n" +
+                "\n" +
+                "Eventually after hiding for months in New Hampshire, Walt returns to Skyler and to finally free her of the situation he has put her in provides her with the coordinates to the burial site of their brother-in-law Hank and his partner Steve Gomez in order to strike a favorable deal with the prosecutor of her trial. He also finally ensures her and their children's safety by exterminating Todd and his uncle's gang and also Lydia herself.", R.drawable.skylar))
+        constList.add(breakingbad("Mike Ehrmantraut", "Michael \"Mike\" Ehrmantraut was a former corrupt police officer who, after being forced to leave the police department, used his connections in the criminal underworld to eventually become Gustavo Fring's right-hand man. Despite his responsibilities as the second-in-command of the mob, he occasionally carried out favors for his lawyer and old associate Saul Goodman as a private investigator, cleaner, and fixer, out of loyalty to Saul (they had known each other for six years). Mike was a calm and calculating individual who efficiently performed his duties for Gus, and he was the glue that held the Albuquerque Mafia together. He had extensive knowledge of how to operate on both sides of the law without detection. Prior to his involvement in Gus' operation, Mike worked as parking ticket booth operator at a local courthouse, where he met Saul, then known as Jimmy McGill.\n" +
+                "\n" +
+                "As a former beat cop and true professional, he maintained an extensive, up-to-date knowledge of forensic evidence, surveillance equipment, and police procedure. Mike was also well trained and calm in all types of combat situations, once using science and long strategy to take down a large number of hostiles with ease. Mike had one son, Matt, who also became a police officer. Matt married Stacey and they had a daughter, Kaylee. Matt was approached by two corrupt officers and asked Mike for advice; Mike advised Matt that not taking the money would label him a whistleblower, and endanger his life and family, so Matt took it. Matt's partner and another officer killed Matt because his hesitation caused them to think he might turn them in. Stacey and Kaylee left Philadelphia for Albuquerque after Matt's funeral. Mike identified the officers who killed Matt and arranged a similar ambush to kill both of them, after which he left for Albuquerque, allowing him to see Stacey and Kaylee.\n" +
+                "\n" +
+                "A rough and rocky relationship between the young drug dealer Jesse Pinkman and Mike began, and although initially frustrated at Gus choosing to go into business with Jesse against his advice, he learned to respect him. However, Mike did not like Jesse's partner Walter White in the least, considering him to be selfish, arrogant, and egotistical and nearly killed him on Gus' orders for killing two of his dealers although the death of Gale Boetticher prevented this. He later assisted Gus in turning Jesse against Walt by giving Jesse more responsibilities and respect.\n" +
+                "\n" +
+                "Following the assassination of Gus and the subsequent destruction of his empire as a result of Walt's actions, Mike, along with a majority of his fellow empire operatives would be exposed to the DEA and have their offshore assets seized, with Mike only narrowly avoiding arrest for never having directly touched his money set up in his granddaughters name. He later temporarily becomes a reluctant partner in Walt and Jesse's meth operation in order to provide the hazard pay for his incarcerated men in prison to keep their families financially sound and prevent them from making deals with law enforcement. He eventually chose to retire from Walt's operation due to persistent law enforcement surveillance of him and tried to dismantle Walt's drug operation by selling 1000 gallons of stolen methlaymine to his Arizona contact Declan. Walt however blocked the deal and Mike received a \$5 million buyout payment from Declan after Walt made a deal with him.\n" +
+                "\n" +
+                "Shortly following his retirement from Walt's drug operation, Mike's assets would be seized a second time after the DEA caught his lawyer in the act of depositing Mike's drug money for his incarcerated men and was left with no options but to flee after his lawyer betrayed him to the DEA. Before fleeing however, he would be unnecessarily shot by Walt after Mike brutally insulted him over creating the circumstances that led to his own downfall, and would thus die without leaving his beloved family any money earned from his long career as a professional criminal.", R.drawable.mike))
+        constList.add(breakingbad("Jimmy McGill", "James Morgan \"Jimmy\" McGill, better known by his professional alias Saul Goodman, (\"Magic Man\") is the former principal attorney of Saul Goodman & Associates and the husband of Kim Wexler. He operated out of a cheap strip mall office and ran over-the-top late night TV commercials advising potential clients that they'd \"Better Call Saul\" when in trouble with the law. Despite his ads seeming tacky and cheap, Saul was an effective lawyer, using illegal tactics and dirty schemes to get his clients released or acquitted.\n" +
+                "\n" +
+                "Saul was born in Cicero, Illinois on November 12, 1960 as James Morgan \"Jimmy\" McGill. His older brother, Chuck, became a successful lawyer as one of the name partners at an Albuquerque law firm, Hamlin, Hamlin & McGill. Jimmy became a scam artist in Cicero and soon gained the nickname \"Slippin' Jimmy\" for staging \"slip and fall\" accidents to make quick cash. Jimmy eventually runs into trouble with the police and Chuck returns to help, but only on the condition that Jimmy joins him in Albuquerque and works a legitimate job in HHM's mailroom. There, Jimmy befriends Kim Wexler, an HHM employee who is attending law school. Inspired by her success, Jimmy completes his college degree and attends a correspondence law school. He passes the bar exam and hopes to be hired at HHM, but at Chuck's secret instigation, senior partner Howard Hamlin denies Jimmy the opportunity. Jimmy then starts a solo practice in the utility room of a Vietnamese nail salon. He takes whatever cases he can get his hands on, including low paid public defender work. Jimmy frequently gets into altercations with the stoic Mike Ehrmantraut, a former Philadelphia police officer working the tollbooth at the courthouse's parking lot.\n" +
+                "\n" +
+                "Jimmy begins to use the alias \"Saul Goodman\", a play on the phrase \"(It)'s all good, man\". He initially uses it as the alternate identity for the high-energy pitchman in TV ads he produces during the suspension of his law license, and later when he begins a business reselling prepaid cell phones on the street. Several years later, he becomes the lawyer and advisor for meth cooks Walter White and Jesse Pinkman, getting them out of several difficult situations. Often dressed in flashy suits, Saul boasts extensive connections within Albuquerque's criminal underworld, and serves as a go-between connecting drug distributors, evidence removers, impersonators, and other criminals-for-hire. He arranges for Walt to launder drug money through Walter White Jr.'s website and dispatches Mike to coach Jesse and dispose of any incriminating evidence in his apartment after his girlfriend Jane overdoses.\n" +
+                "\n" +
+                "Saul became a trusted consigliere to Walt, helping launder drug money for Walt and, later, his wife Skyler. Saul expanded Walt's profits by arranging for the latter to supply crystal meth in bulk to Albuquerque drug dealers via Mike, who was himself consigliere to local kingpin Gustavo Fring. Eventually, however, Walt's criminal secrets were discovered by his brother-in-law, DEA agent Hank Schrader, and despite attempts to protect him from arrest and Jesse's wrath after discovering Walt's poisoning of Brock, Saul was forced to abandon his life as a criminal lawyer. With the help of the criminal extractor Ed Galbraith, Saul fled to Omaha, Nebraska, and began a new life as Gene Takavic, the manager of a Cinnabon restaurant, living in constant fear of exposure and arrest, as well as regret over losing his past life.", R.drawable.jimmy))
+        constList.add(breakingbad("Hank Schrader", "Henry R. \"Hank\" Schrader was the husband of Marie Schrader (the sister of Skyler White) and Assistant Special Agent in Charge (ASAC) of the Albuquerque office of the Drug Enforcement Administration. A high-energy and boisterous man, Hank was Walter White's brother-in-law. Although he was a highly competent agent and genuinely cared about Marie, Walter, Skyler White and Walter White Jr., his loud ways insulated him from the danger he faced daily.\n" +
+                "\n" +
+                "Hank's year-long investigation of the meth kingpin in the area named \"Heisenberg\" - the source of a mysterious, high-quality blue meth - led him to expose Gus' Drug Empire and bring down Gustavo Fring. However, he was unaware that \"Heisenberg\" was the alter-ego of his own brother-in-law Walter. By linking Walt to Gale Boetticher, a known manufacturer of blue meth for the Fring drug ring, Hank eventually discovered Walt's secret and began to dedicate himself to bringing Walt to justice once and for all.\n" +
+                "\n" +
+                "To this end, with the help of Jesse Pinkman, Hank nearly succeeded in this task before eventually getting caught up in an intense gunfight with Jack Welker's Gang in which fellow DEA Agent and friend Steven Gomez was killed in the midst of the chaos. Despite Walt's pleas, Hank was shot and killed moments later in execution style by Jack Welker.", R.drawable.hank))
+
+        adapter = breakingbadAdapter(this, constList)
+        listView.adapter = adapter
+    }
+
+    class breakingbadAdapter: BaseAdapter {
+        var constList = ArrayList<breakingbad>()
+        var context: Context?=null;
+
+        constructor(context: Context, constList: ArrayList<breakingbad>): super() {
+            this.constList=constList
+            this.context=context
+        }
+        override fun getCount(): Int {
+            return constList.size
+        }
+
+        override fun getItem(position: Int): Any {
+            return constList[position]
+        }
+
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
+        }
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            var posbreakingbad: breakingbad = constList[position]
+            var inflator = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            var breaking = inflator.inflate(R.layout.characters, null)
+            breaking.name.text = posbreakingbad.constName
+            breaking.description.text = posbreakingbad.constDescription
+            breaking.image.setImageResource(posbreakingbad.constImage!!)
+
+            breaking.image.setOnClickListener{
+                var intent = Intent(context, breakingbad_details::class.java)
+                intent.putExtra("constName", posbreakingbad.constName)
+                intent.putExtra("constDescription", posbreakingbad.constDescription)
+                intent.putExtra("constImage", posbreakingbad.constImage)
+                context!!.startActivity(intent)
+            }
+            return breaking
+        }
+
+    }
+}

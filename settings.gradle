@@ -1,0 +1,2 @@
+rootProject.name = "breaking bad wiki"
+include ':app'
